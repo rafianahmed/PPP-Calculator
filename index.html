@@ -3,30 +3,81 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>PPP Calculator (Absolute, Relative, Misvaluation)</title>
+  <title>PPP + IRP + Fisher Calculator</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <main class="container">
     <header class="header">
-      <h1>PPP Calculator</h1>
+      <h1>PPP / IRP / Fisher Calculator</h1>
       <p class="subtitle">
-        Compute PPP exchange rate, % misvaluation, Absolute PPP, and Relative PPP (inflation-based).
+        Relative PPP test & forward, misvaluation, real exchange rate (q), IRP, Fisher effect, International Fisher Effect, PPP GDP.
       </p>
-      <div class="note">
-        <strong>Quote convention used here:</strong> <span class="mono">E = FC per 1 USD</span>
-        (foreign currency per 1 USD). If your class uses <span class="mono">USD per FC</span>, take the reciprocal.
-      </div>
     </header>
 
     <section class="card">
+      <h2>Settings</h2>
+
       <div class="row">
-        <label for="calcType">Select calculation</label>
+        <label>Domestic currency label</label>
+        <input id="domLabel" type="text" value="USD" placeholder="e.g., USD or $" />
+        <div class="help">“Domestic” = the currency in the numerator of your quote (e.g., <span class="mono">$</span> in <span class="mono">$/€</span>).</div>
+      </div>
+
+      <div class="row">
+        <label>Foreign currency label</label>
+        <input id="forLabel" type="text" value="EUR" placeholder="e.g., EUR or €" />
+        <div class="help">“Foreign” = the other currency (e.g., <span class="mono">€</span> in <span class="mono">$/€</span>).</div>
+      </div>
+
+      <div class="row">
+        <label>Quote format</label>
+        <select id="quoteMode">
+          <option value="DOM_PER_FOR" selected>Domestic per 1 Foreign (e.g., $/€)</option>
+          <option value="FOR_PER_DOM">Foreign per 1 Domestic (e.g., €/ $)</option>
+        </select>
+        <div class="help">
+          Most of your slides use <span class="mono">Domestic per Foreign</span> like <span class="mono">$ / €</span>.
+        </div>
+      </div>
+
+      <details class="details">
+        <summary>Glossary (what the symbols mean)</summary>
+        <ul class="bullets">
+          <li><span class="mono">S0</span> = spot exchange rate today</li>
+          <li><span class="mono">S1</span> = expected spot later (PPP/IFE expectation)</li>
+          <li><span class="mono">F</span> = forward rate</li>
+          <li><span class="mono">π</span> = inflation over the period</li>
+          <li><span class="mono">i</span> = nominal interest rate over the period</li>
+          <li><span class="mono">q</span> = real exchange rate / competitiveness measure</li>
+          <li><span class="mono">ρ</span> = real interest rate</li>
+        </ul>
+      </details>
+    </section>
+
+    <section class="card">
+      <h2>Calculator</h2>
+
+      <div class="row">
+        <label for="calcType">Choose calculation</label>
         <select id="calcType">
-          <option value="ppp_rate">PPP Exchange Rate (single-good / Big Mac style)</option>
-          <option value="misvaluation">% Misvaluation vs USD (under/over valuation)</option>
-          <option value="absolute_ppp">Absolute PPP (price levels / basket)</option>
-          <option value="relative_ppp">Relative PPP (inflation differentials)</option>
+          <option value="ppp_forward_test">1) Relative PPP “Test” + Forward Discount/Premium</option>
+          <option value="ppp_single_good">2) PPP Exchange Rate (single-good / Big Mac style)</option>
+          <option value="misvaluation">3) % Misvaluation vs PPP (under/over valuation)</option>
+
+          <option value="real_fx_level">4) Real Exchange Rate q (level: q = E·P* / P)</option>
+          <option value="real_fx_slide">5) Real Exchange Rate q (slide style using inflation + FX change)</option>
+
+          <option value="irp_forward">6) IRP Forward Rate + Forward Discount/Premium</option>
+          <option value="ppp_irp_check">7) PPP vs IRP Consistency Check (inflation vs interest gaps)</option>
+
+          <option value="exp_change_infl">8) Expected FX change ≈ inflation differential (exact + approx)</option>
+          <option value="exp_change_int">9) Expected FX change ≈ interest differential (exact + approx)</option>
+
+          <option value="fisher">10) Exact Fisher Effect (nominal ↔ real ↔ inflation)</option>
+          <option value="ife">11) International Fisher Effect (expected FX change from interest gap)</option>
+
+          <option value="ppp_gdp">12) PPP GDP Conversion (local GDP → PPP USD)</option>
         </select>
       </div>
 
@@ -40,23 +91,11 @@
 
     <section class="card" id="outputCard">
       <h2>Results</h2>
-      <div id="output" class="output muted">Choose a calculation and enter values.</div>
+      <div id="output" class="output muted">Pick a calculation and enter values.</div>
     </section>
 
-    <section class="card">
-      <h2>Quick reminders</h2>
-      <ul class="bullets">
-        <li><strong>Absolute PPP (levels)</strong> often fails short-run (taxes, transport, non-tradables).</li>
-        <li><strong>Relative PPP (changes)</strong> can hold better over long horizons.</li>
-        <li>PPP is a <strong>long-run anchor</strong>, not a guaranteed trading signal.</li>
-      </ul>
-      <p class="disclaimer">
-        Educational tool only — not investment, legal, or financial advice.
-      </p>
-    </section>
-
-    <footer class="footer">
-      <span class="muted">Built as a simple static site (HTML/CSS/JS) — perfect for GitHub Pages.</span>
+    <footer class="footer muted">
+      Educational tool only — PPP/IRP/Fisher are benchmarks and can deviate in the short run.
     </footer>
   </main>
 
