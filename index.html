@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PPP Calculator (Absolute, Relative, Misvaluation)</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="container">
+    <header class="header">
+      <h1>PPP Calculator</h1>
+      <p class="subtitle">
+        Compute PPP exchange rate, % misvaluation, Absolute PPP, and Relative PPP (inflation-based).
+      </p>
+      <div class="note">
+        <strong>Quote convention used here:</strong> <span class="mono">E = FC per 1 USD</span>
+        (foreign currency per 1 USD). If your class uses <span class="mono">USD per FC</span>, take the reciprocal.
+      </div>
+    </header>
+
+    <section class="card">
+      <div class="row">
+        <label for="calcType">Select calculation</label>
+        <select id="calcType">
+          <option value="ppp_rate">PPP Exchange Rate (single-good / Big Mac style)</option>
+          <option value="misvaluation">% Misvaluation vs USD (under/over valuation)</option>
+          <option value="absolute_ppp">Absolute PPP (price levels / basket)</option>
+          <option value="relative_ppp">Relative PPP (inflation differentials)</option>
+        </select>
+      </div>
+
+      <div id="formArea" class="form-area"></div>
+
+      <div class="actions">
+        <button id="btnCompute">Compute</button>
+        <button id="btnReset" class="secondary">Reset</button>
+      </div>
+    </section>
+
+    <section class="card" id="outputCard">
+      <h2>Results</h2>
+      <div id="output" class="output muted">Choose a calculation and enter values.</div>
+    </section>
+
+    <section class="card">
+      <h2>Quick reminders</h2>
+      <ul class="bullets">
+        <li><strong>Absolute PPP (levels)</strong> often fails short-run (taxes, transport, non-tradables).</li>
+        <li><strong>Relative PPP (changes)</strong> can hold better over long horizons.</li>
+        <li>PPP is a <strong>long-run anchor</strong>, not a guaranteed trading signal.</li>
+      </ul>
+      <p class="disclaimer">
+        Educational tool only — not investment, legal, or financial advice.
+      </p>
+    </section>
+
+    <footer class="footer">
+      <span class="muted">Built as a simple static site (HTML/CSS/JS) — perfect for GitHub Pages.</span>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
